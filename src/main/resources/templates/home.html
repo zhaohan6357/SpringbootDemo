@@ -1,0 +1,31 @@
+<html>
+<body>
+<pre>
+   ${value1+20} <!--注释-->
+   ${value2!"hehe"}
+   ${value3!}
+   <#list colors as x>
+      This is Color ${x?index}:${x},${x?counter}
+   <#else>
+      No color!
+   </#list>
+
+   <#list map?keys as key>
+      ${key} = ${map[key]};
+   </#list>
+
+
+<#assign users={"username":"jadyer", "password":1234}/>
+${users.username}----${(users.password)?int}----${users["password"]?string(0)}----${7.5?int}----${7.5?string(0)}
+
+<#assign h = {"name":"mouse", "price":50}/>
+${h.name}
+${h.price}
+
+${test?api.t()}
+${test?api.t()}
+
+
+</pre>
+</body>
+</html>
