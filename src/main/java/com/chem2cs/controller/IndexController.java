@@ -1,6 +1,11 @@
 package com.chem2cs.controller;
 
+import com.chem2cs.aspects.LogAspect;
 import com.chem2cs.model.user;
+import com.chem2cs.service.WendaService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -19,10 +24,14 @@ import java.util.*;
 @Controller
 
 public class IndexController {
+    @Autowired
+    WendaService wendaService;
+    private static  final Logger LOGGER=  LoggerFactory.getLogger(IndexController.class);
     @RequestMapping(path={"/","/index"})
     @ResponseBody
     public String index(HttpSession httpSession){
-        return "Hello world"+httpSession.getAttribute("msg");
+        LOGGER.info("RUNNING");
+        return wendaService.getMessage(2)+"Hello world"+httpSession.getAttribute("msg");
     }
     @RequestMapping(path={"/profile/{groupId}/{userId}"})
     @ResponseBody
