@@ -11,21 +11,47 @@
    </#list>
 
    <#list map?keys as key>
-      ${key} = ${map[key]};
+   ${key} = ${map[key]};
    </#list>
 
+   <#assign users={"username":"jadyer", "password":1234}/>
+   ${users.username}----${(users.password)?int}----${users["password"]?string(0)}----${7.5?int}----${7.5?string(0)}
 
-<#assign users={"username":"jadyer", "password":1234}/>
-${users.username}----${(users.password)?int}----${users["password"]?string(0)}----${7.5?int}----${7.5?string(0)}
+   <#assign h = {"name":"mouse", "price":50}/>
+   ${h.name}
+   ${h.price}
 
-<#assign h = {"name":"mouse", "price":50}/>
-${h.name}
-${h.price}
+   123
+   ${test?api.t()}
+   ${test?api.t()}
 
-${test?api.t()}
-${test?api.t()}
+   zhijiediaoyong:
+   ${test.t()}
+   ${test.a}
 
+   456
 
+   User:${user.name}
+   User:${user.info}
+   User:${user.getInfo()}
+   <#assign title="new">
+   Title:${title}
+
+   <#include "header.html">
+
+   <#macro colorRender color>
+      <#list color as x>
+        ColorRender ${x?counter} ${x}
+      </#list>
+   </#macro>
+
+    <@colorRender color=colors/>
+
+    <#assign hel= "hello"/>
+    <#assign hel2= "${hel} world"/>
+
+    ${hel}
+    ${hel2}
 </pre>
 </body>
 </html>

@@ -1,10 +1,7 @@
-package com.nowcoder;
+package com.chem2cs;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.Arrays;
-import java.util.List;
 
 @SpringBootApplication
 public class WendaApplication {

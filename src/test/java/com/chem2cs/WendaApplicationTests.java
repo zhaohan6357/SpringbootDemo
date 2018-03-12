@@ -1,4 +1,4 @@
-package com.nowcoder;
+package com.chem2cs;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
