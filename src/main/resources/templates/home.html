@@ -16,6 +16,7 @@
 
    <#assign users={"username":"jadyer", "password":1234}/>
    ${users.username}----${(users.password)?int}----${users["password"]?string(0)}----${7.5?int}----${7.5?string(0)}
+   ${users.username}----${(users.password)?string(0)}----${users["password"]?string(0)}----${7.5?int}----${7.5?string(0)}
 
    <#assign h = {"name":"mouse", "price":50}/>
    ${h.name}
@@ -31,7 +32,7 @@
 
    456
 
-   User:${user.name}
+   User:${user.name}a
    User:${user.info}
    User:${user.getInfo()}
    <#assign title="new">
