@@ -1,12 +1,10 @@
 package com.chem2cs.controller;
 
-import com.chem2cs.aspects.LogAspect;
-import com.chem2cs.model.user;
+import com.chem2cs.model.User;
 import com.chem2cs.service.WendaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +15,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.lang.reflect.Method;
 import java.util.*;
 
 
@@ -60,7 +57,7 @@ public class IndexController {
 
         model.addAttribute("direct",t);
 
-        model.addAttribute("user",new user("zhao"));
+        model.addAttribute("user",new User("zhao"));
         return "home";
     }
 
