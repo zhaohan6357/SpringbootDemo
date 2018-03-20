@@ -2,6 +2,7 @@ package com.chem2cs.controller;
 
 import com.chem2cs.model.User;
 import com.chem2cs.service.WendaService;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+import sun.nio.cs.FastCharsetProvider;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -115,6 +117,21 @@ public class IndexController {
     public String error(Exception e){
         return "error"+e.getMessage();
     }
+
+    @RequestMapping(path={"/test"})
+    public String test1(Model model,@RequestParam(value="next",required =false) String next){
+        model.addAttribute("next",next);
+        System.out.println("test中next=------------"+next);
+        return "test";
+    }
+
+    @RequestMapping(path={"/testreg"},method = {RequestMethod.POST})
+    public String testreg(Model model,@RequestParam(value="next",required =false) String next){
+        System.out.println("testreg中next=-----------------"+next);
+        model.addAttribute("next",next);
+        return "test2";
+    }
+
 
 
 }

@@ -31,17 +31,18 @@ public class InitDatabaseTest {
             User user=new User();
             user.setId(i+1);
             user.setHeadUrl(String.format("http://images.nowcoder.com/head/%dt.png", random.nextInt(1000)));
-            user.setName(String.format("user%d",i+1));
+            user.setName(String.format("user%d",i));
             user.setPassword("");
             user.setSalt("");
             userDAO.addUser(user);
             user.setPassword("x3xx");
             userDAO.updatePassword(user.getPassword(),user.getId());
             Question question=new Question();
-            question.setCommentCount(random.nextInt());
+            question.setCommentCount(random.nextInt(1000));
             Date date=new Date();
             date.setTime(date.getTime()+1000*3600*i);
-            question.setCreatDate(date);
+            question.setCreatedDate(date);
+            System.out.println("当前设置时间为"+question.getCreatedDate());
             question.setUserId(i+1);
             question.setTitle(String.format("Tilte%d",i));
             question.setContent(String.format("the content%d",random.nextInt(1000)));
@@ -49,9 +50,7 @@ public class InitDatabaseTest {
 
         }
 
-        Assert.assertEquals("x3xx",userDAO.selectByID(1).getPassword());
-        userDAO.deleteByID(1);
-        Assert.assertNull(userDAO.selectByID(1));
+
         System.out.println(questionDAO.selectLatestQuestions(0,0,5));
     }
 }
