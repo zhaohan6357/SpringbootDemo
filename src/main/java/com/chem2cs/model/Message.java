@@ -7,7 +7,7 @@ public class Message {
     private int fromId;
     private int toId;
     private String content;
-    private Date creatDate;
+    private Date createdDate;
     private int hasRead;
     private String conversationId;
 
@@ -43,12 +43,12 @@ public class Message {
         this.content = content;
     }
 
-    public Date getCreatDate() {
-        return creatDate;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreatDate(Date creatDate) {
-        this.creatDate = creatDate;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public int getHasRead() {

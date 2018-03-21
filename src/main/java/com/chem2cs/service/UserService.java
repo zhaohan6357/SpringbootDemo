@@ -23,7 +23,9 @@ public class UserService {
     public User getUser(int id) {
         return userDAO.selectByID(id);
     }
-
+    public User getUserByName(String name){
+        return userDAO.selectByName(name);
+    }
     public String addLoginTickt(int userId){
         LoginTicket loginTicket=new LoginTicket();
         loginTicket.setUserId(userId);

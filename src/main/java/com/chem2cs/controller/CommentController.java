@@ -18,7 +18,7 @@ import java.util.Date;
 
 @Controller
 public class CommentController {
-    private static  final Logger LOGGER=  LoggerFactory.getLogger(QuestionController.class);
+    private static  final Logger LOGGER=  LoggerFactory.getLogger(CommentController.class);
     @Autowired
     QuestionService questionService;
     @Autowired
