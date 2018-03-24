@@ -1,8 +1,8 @@
 package com.chem2cs.controller;
 
-import com.chem2cs.model.HostHolder;
-import com.chem2cs.model.Question;
-import com.chem2cs.model.ViewObject;
+import com.chem2cs.model.*;
+import com.chem2cs.service.CommentService;
+import com.chem2cs.service.FollowService;
 import com.chem2cs.service.QuestionService;
 import com.chem2cs.service.UserService;
 import org.slf4j.Logger;
@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.swing.text.View;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,11 +26,28 @@ public class HomeController {
     UserService userService;
     @Autowired
     QuestionService questionService;
+    @Autowired
+    FollowService followService;
+    @Autowired
+    CommentService commentService;
     @RequestMapping(path={"/user/{userId}"})
 
     public String indexUser(Model model, @PathVariable("userId") int userId){
         model.addAttribute("vos",getQuestions(userId,0,10));
-        return "index";
+        User user=userService.getUser(userId);
+        ViewObject vo=new ViewObject();
+        vo.set("user",user);
+        vo.set("followeeCount",followService.getFolloweeCount(EntityType.ENTITY_USER,userId));
+        vo.set("followerCount",followService.getFollowerCount(EntityType.ENTITY_USER,userId));
+        vo.set("commentCount", commentService.getUserCommentCount(userId,EntityType.ENTITY_QUESTION));
+        if(hostHolder.getUser()!=null){
+            vo.set("followed",followService.isFollower(hostHolder.getUser().getId(),EntityType.ENTITY_USER,userId));
+        }else{
+            vo.set("followed",false);
+        }
+        model.addAttribute("profileUser", vo);
+
+        return "profile";
     }
 
     @RequestMapping(path={"/","/index"})

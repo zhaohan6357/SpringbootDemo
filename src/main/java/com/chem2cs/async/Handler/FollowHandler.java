@@ -37,6 +37,8 @@ public class FollowHandler implements EventHandler{
             message.setContent("user " + user.getName() + " follow you, http:" +
                     "//127.0.0.1:8080/user/" + model.getActorId());
         }
+
+        messageService.addMessage(message);
     }
 
     @Override

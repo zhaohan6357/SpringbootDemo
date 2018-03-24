@@ -2,6 +2,7 @@ package com.chem2cs.service;
 
 import com.chem2cs.dao.CommentDao;
 import com.chem2cs.model.Comment;
+import com.chem2cs.model.EntityType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.HtmlUtils;
@@ -36,6 +37,10 @@ public class CommentService {
 
     public Comment getCommentById(int id){
         return commentDao.getCommentById(id);
+    }
+
+    public int getUserCommentCount(int userId,int entityType){
+        return commentDao.getUserCommentCount(userId, entityType);
     }
 
 }

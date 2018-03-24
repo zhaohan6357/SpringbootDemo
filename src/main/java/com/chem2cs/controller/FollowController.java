@@ -36,8 +36,10 @@ public class FollowController {
             return WendaUtil.getJSONString(999);
         }
         boolean ret=followService.follow(hostHolder.getUser().getId(),EntityType.ENTITY_USER,userId);
+
         eventProducer.fireEvent(new EventModel(EventType.FOLLOW).setEntityId(userId)
-                .setEntityType(EntityType.ENTITY_USER).setEntityOwnerId(userId));
+                .setEntityType(EntityType.ENTITY_USER).setEntityOwnerId(userId).setActorId(hostHolder.getUser().getId()));
+
         return WendaUtil.getJSONString(ret? 0:1,String.valueOf(followService.getFolloweeCount(EntityType.ENTITY_USER,hostHolder.getUser().getId())));
     }
 
@@ -48,8 +50,11 @@ public class FollowController {
             return WendaUtil.getJSONString(999);
         }
         boolean ret=followService.unfollow(hostHolder.getUser().getId(),EntityType.ENTITY_USER,userId);
-        eventProducer.fireEvent(new EventModel(EventType.UNFOLLOW).setEntityId(userId)
-                .setEntityType(EntityType.ENTITY_USER).setEntityOwnerId(userId).setActorId(hostHolder.getUser().getId()));
+
+        eventProducer.fireEvent(new EventModel(EventType.FOLLOW)
+                .setActorId(hostHolder.getUser().getId()).setEntityId(userId)
+                .setEntityType(EntityType.ENTITY_USER).setEntityOwnerId(userId));
+
         return WendaUtil.getJSONString(ret? 0:1,String.valueOf(followService.getFolloweeCount(EntityType.ENTITY_USER,hostHolder.getUser().getId())));
     }
 

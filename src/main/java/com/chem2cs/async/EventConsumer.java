@@ -32,7 +32,7 @@ public class EventConsumer implements InitializingBean,ApplicationContextAware {
         Map<String,EventHandler> beans=applicationContext.getBeansOfType(EventHandler.class);
         if(beans!=null&&beans.size()!=0){
             for(Map.Entry<String,EventHandler> entry:beans.entrySet()){
-               // System.out.println("---hanlder:"+entry.getKey()+"  eventHandeler"+entry.getValue().getSupportEventTypes());
+                System.out.println("---hanlder:"+entry.getKey()+"  eventHandeler"+entry.getValue().getSupportEventTypes());
                 List<EventType> eventTypes=entry.getValue().getSupportEventTypes();
                 for(EventType type:eventTypes){
                     if(!config.containsKey(type)){
