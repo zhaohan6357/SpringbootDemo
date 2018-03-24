@@ -2,6 +2,7 @@ package com.chem2cs.controller;
 
 import com.chem2cs.model.*;
 import com.chem2cs.service.CommentService;
+import com.chem2cs.service.LikeService;
 import com.chem2cs.service.QuestionService;
 import com.chem2cs.service.UserService;
 import com.chem2cs.util.WendaUtil;
@@ -21,6 +22,8 @@ import java.util.List;
 @Controller
 public class QuestionController {
     private static  final Logger LOGGER=  LoggerFactory.getLogger(QuestionController.class);
+    @Autowired
+    LikeService likeService;
     @Autowired
     QuestionService questionService;
     @Autowired
@@ -55,20 +58,48 @@ public class QuestionController {
         return WendaUtil.getJSONString(1,"添加失败");
     }
 
+/*    @RequestMapping(path={"/question/{qid}"})
+    public String questionDetail(@PathVariable(value = "qid") int qid,
+                                 Model model) {
+        Question question = questionService.getQuestion(qid);
+        model.addAttribute("question", question);
+ *//*       User user=null;
+        if(hostHolder.getUser()!=null){
+            user=hostHolder.getUser();
+        }
+        model.addAttribute("user",user);*//*
+        List<Comment> commentList=commentService.getCommentByEntity(qid, EntityType.ENTITY_QUESTION);
+        List<ViewObject> comments=new ArrayList<>();
+        for(Comment comment:commentList){
+            ViewObject vo=new ViewObject();
+            vo.set("comment",comment);
+            vo.set("user",userService.getUser(comment.getUserId()));
+            comments.add(vo);
+        }
+        model.addAttribute("comments",comments);
+        return "detail";
+    }*/
+
     @RequestMapping(path={"/question/{qid}"})
     public String questionDetail(@PathVariable(value = "qid") int qid,
                                  Model model) {
         Question question = questionService.getQuestion(qid);
         model.addAttribute("question", question);
-        User user=null;
+ /*       User user=null;
         if(hostHolder.getUser()!=null){
             user=hostHolder.getUser();
         }
-        model.addAttribute("user",user);
+        model.addAttribute("user",user);*/
         List<Comment> commentList=commentService.getCommentByEntity(qid, EntityType.ENTITY_QUESTION);
         List<ViewObject> comments=new ArrayList<>();
         for(Comment comment:commentList){
             ViewObject vo=new ViewObject();
+            vo.set("likeCount",likeService.getLikeCount(EntityType.ENTITY_COMMENT,comment.getId()));
+           if(hostHolder.getUser()==null){
+               vo.set("liked",0);
+           }else{
+               vo.set("liked",likeService.getLikeStatus(hostHolder.getUser().getId(),EntityType.ENTITY_COMMENT,comment.getId()));
+           }
             vo.set("comment",comment);
             vo.set("user",userService.getUser(comment.getUserId()));
             comments.add(vo);

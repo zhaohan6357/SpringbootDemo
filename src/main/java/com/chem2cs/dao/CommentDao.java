@@ -1,7 +1,6 @@
 package com.chem2cs.dao;
 
 import com.chem2cs.model.Comment;
-import com.chem2cs.model.Question;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Service;
 
@@ -30,4 +29,7 @@ public interface CommentDao {
 
     @Update({"update comment set status=#{status} where id=#{id}"})
     int updateStatus(@Param("id") int id,@Param("status") int status);
+
+    @Select({"select ",SELECT_FIELDS," from ",TABLE_NAME, " where id=#{id}"})
+    Comment getCommentById(@Param("id") int id);
 }

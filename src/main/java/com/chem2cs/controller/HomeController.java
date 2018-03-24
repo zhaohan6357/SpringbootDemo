@@ -34,6 +34,8 @@ public class HomeController {
 
     @RequestMapping(path={"/","/index"})
     public String index(Model model){
+       //  System.out.println(">>>>>>user:"+hostHolder.getUser());
+       //  model.addAttribute("user",hostHolder.getUser());
         model.addAttribute("vos",getQuestions(0,0,10));
         return "index";
     }

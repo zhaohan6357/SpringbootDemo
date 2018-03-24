@@ -56,6 +56,8 @@ public class MessageController {
     @RequestMapping(path = {"/msg/detail"}, method = {RequestMethod.GET})
     public String getConversationDetail(Model model,
                                         @Param("conversationId")String conversationId) {
+        if(hostHolder.getUser()==null)
+            return "redirect:/reglogin";
         try {
             List<Message> messageList=messageService.getConversationDetail(conversationId,0,10);
             List<ViewObject> messages=new ArrayList<>();

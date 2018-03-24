@@ -84,23 +84,13 @@
                     <meta itemprop="answer-url-token" content="66862039">
                     <a class="zg-anchor-hidden" name="answer-22162611"></a>
                     <div class="zm-votebar goog-scrollfloater js-vote" data-id="${comment.comment.id!}">
-                        <#if comment.liked gt 0>
-                        <button class="up js-like pressed" title="赞同">
-                        <#else>
                         <button class="up js-like" title="赞同">
-                        </#if>
-                         <i class="icon vote-arrow"></i>
-                         <span class="count js-voteCount">${comment.likeCount!}</span>
-                         <span class="la bel sr-only">赞同</span>
-                        </button>
-                        <#if comment.liked lt 0>
-                        <button class="down js-dislike pressed" title="反对，不会显示你的姓名">
-                        <#else>
-                        <button class="down js-dislike" title="赞同">
-                        </#if>
-                        <i class="icon vote-arrow"></i>
-                        <span class="label sr-only">反对，不会显示你的姓名</span>
-                        </button>
+                            <i class="icon vote-arrow"></i>
+                            <span class="count js-voteCount">28</span>
+                            <span class="label sr-only">赞同</span></button>
+                        <button class="down js-dislike" title="反对，不会显示你的姓名">
+                            <i class="icon vote-arrow"></i>
+                            <span class="label sr-only">反对，不会显示你的姓名</span></button>
                     </div>
                     <div class="answer-head">
                         <div class="zm-item-answer-author-info">
@@ -113,7 +103,7 @@
                         <div class="zm-item-vote-info" data-votecount="28" data-za-module="VoteInfo">
                                 <span class="voters text">
                                     <a href="" class="more text">
-                                        <span class="js-voteCount">${comment.likeCount!}</span>&nbsp;人赞同</a></span>
+                                        <span class="js-voteCount">28</span>&nbsp;人赞同</a></span>
                         </div>
                     </div>
                     <div class="zm-item-rich-text expandable js-collapse-body" data-resourceid="6727688"

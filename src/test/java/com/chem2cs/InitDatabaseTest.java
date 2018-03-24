@@ -2,9 +2,10 @@ package com.chem2cs;
 
 import com.chem2cs.dao.QuestionDAO;
 import com.chem2cs.dao.UserDAO;
+import com.chem2cs.model.EntityType;
 import com.chem2cs.model.Question;
 import com.chem2cs.model.User;
-import org.junit.Assert;
+import com.chem2cs.service.FollowService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class InitDatabaseTest {
     QuestionDAO questionDAO;
     @Autowired
     UserDAO userDAO;
+    @Autowired
+    FollowService followService;
     @Test
     public void initDatabase(){
         System.out.println("start test");
@@ -35,6 +38,10 @@ public class InitDatabaseTest {
             user.setPassword("");
             user.setSalt("");
             userDAO.addUser(user);
+
+            for(int j=1;j<i;++j){
+                followService.follow(j, EntityType.ENTITY_USER,i);
+            }
             user.setPassword("x3xx");
             userDAO.updatePassword(user.getPassword(),user.getId());
             Question question=new Question();

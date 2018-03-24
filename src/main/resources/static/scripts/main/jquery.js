@@ -194,7 +194,7 @@ jQuery.extend = jQuery.fn.extend = function() {
 		length = arguments.length,
 		deep = false;
 
-	// Handle a deep copy situation
+	// Handler a deep copy situation
 	if ( typeof target === "boolean" ) {
 		deep = target;
 
@@ -203,7 +203,7 @@ jQuery.extend = jQuery.fn.extend = function() {
 		i++;
 	}
 
-	// Handle case when target is a string or something (possible in deep copy)
+	// Handler case when target is a string or something (possible in deep copy)
 	if ( typeof target !== "object" && !jQuery.isFunction( target ) ) {
 		target = {};
 	}
@@ -2903,7 +2903,7 @@ var rootjQuery,
 		// so migrate can support jQuery.sub (gh-2101)
 		root = root || rootjQuery;
 
-		// Handle HTML strings
+		// Handler HTML strings
 		if ( typeof selector === "string" ) {
 			if ( selector[ 0 ] === "<" &&
 				selector[ selector.length - 1 ] === ">" &&
@@ -3309,7 +3309,7 @@ jQuery.Callbacks = function( options ) {
 					while ( ( index = jQuery.inArray( arg, list, index ) ) > -1 ) {
 						list.splice( index, 1 );
 
-						// Handle firing indexes
+						// Handler firing indexes
 						if ( index <= firingIndex ) {
 							firingIndex--;
 						}
@@ -3523,7 +3523,7 @@ jQuery.extend( {
 											typeof returned === "function" ) &&
 										returned.then;
 
-									// Handle a returned thenable
+									// Handler a returned thenable
 									if ( jQuery.isFunction( then ) ) {
 
 										// Special processors (notify) just wait for resolution
@@ -3549,7 +3549,7 @@ jQuery.extend( {
 											);
 										}
 
-									// Handle all other returned values
+									// Handler all other returned values
 									} else {
 
 										// Only substitute handlers pass on context
@@ -3669,7 +3669,7 @@ jQuery.extend( {
 			// promise.fail = list.add
 			promise[ tuple[ 1 ] ] = list.add;
 
-			// Handle state
+			// Handler state
 			if ( stateString ) {
 				list.add(
 					function() {
@@ -3813,7 +3813,7 @@ jQuery.extend( {
 		}
 	},
 
-	// Handle when the DOM is ready
+	// Handler when the DOM is ready
 	ready: function( wait ) {
 
 		// Abort if there are pending holds or we're already ready
@@ -3850,7 +3850,7 @@ function completed() {
 if ( document.readyState === "complete" ||
 	( document.readyState !== "loading" && !document.documentElement.doScroll ) ) {
 
-	// Handle it asynchronously to allow scripts the opportunity to delay ready
+	// Handler it asynchronously to allow scripts the opportunity to delay ready
 	window.setTimeout( jQuery.ready );
 
 } else {
@@ -3982,12 +3982,12 @@ Data.prototype = {
 		var prop,
 			cache = this.cache( owner );
 
-		// Handle: [ owner, key, value ] args
+		// Handler: [ owner, key, value ] args
 		// Always use camelCase key (gh-2257)
 		if ( typeof data === "string" ) {
 			cache[ jQuery.camelCase( data ) ] = value;
 
-		// Handle: [ owner, { properties } ] args
+		// Handler: [ owner, { properties } ] args
 		} else {
 
 			// Copy the properties one-by-one to the cache object
@@ -4896,7 +4896,7 @@ jQuery.event = {
 			};
 		}
 
-		// Handle multiple events separated by a space
+		// Handler multiple events separated by a space
 		types = ( types || "" ).match( rnotwhite ) || [ "" ];
 		t = types.length;
 		while ( t-- ) {
@@ -7748,10 +7748,10 @@ jQuery.fn.extend( {
 
 				return typeof ret === "string" ?
 
-					// Handle most common string cases
+					// Handler most common string cases
 					ret.replace( rreturn, "" ) :
 
-					// Handle cases where value is null/undef or number
+					// Handler cases where value is null/undef or number
 					ret == null ? "" : ret;
 			}
 
@@ -8077,7 +8077,7 @@ jQuery.each( ( "blur focus focusin focusout resize scroll click dblclick " +
 	"change select submit keydown keypress keyup contextmenu" ).split( " " ),
 	function( i, name ) {
 
-	// Handle event binding
+	// Handler event binding
 	jQuery.fn[ name ] = function( data, fn ) {
 		return arguments.length > 0 ?
 			this.on( name, null, data, fn ) :
@@ -8790,7 +8790,7 @@ jQuery.extend( {
 		deferred.promise( jqXHR );
 
 		// Add protocol if not provided (prefilters might expect it)
-		// Handle falsy url in the settings object (#10093: consistency with old signature)
+		// Handler falsy url in the settings object (#10093: consistency with old signature)
 		// We also use the url parameter if available
 		s.url = ( ( url || s.url || location.href ) + "" )
 			.replace( rprotocol, location.protocol + "//" );
@@ -9078,7 +9078,7 @@ jQuery.extend( {
 			if ( fireGlobals ) {
 				globalEventContext.trigger( "ajaxComplete", [ jqXHR, s ] );
 
-				// Handle the global AJAX counter
+				// Handler the global AJAX counter
 				if ( !( --jQuery.active ) ) {
 					jQuery.event.trigger( "ajaxStop" );
 				}
@@ -9398,7 +9398,7 @@ jQuery.ajaxSetup( {
 	}
 } );
 
-// Handle cache's special case and crossDomain
+// Handler cache's special case and crossDomain
 jQuery.ajaxPrefilter( "script", function( s ) {
 	if ( s.cache === undefined ) {
 		s.cache = false;
@@ -9470,7 +9470,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 				rjsonp.test( s.data ) && "data"
 		);
 
-	// Handle iff the expected data type is "jsonp" or we have a parameter to set
+	// Handler iff the expected data type is "jsonp" or we have a parameter to set
 	if ( jsonProp || s.dataTypes[ 0 ] === "jsonp" ) {
 
 		// Get callback name, remembering preexisting value associated with it

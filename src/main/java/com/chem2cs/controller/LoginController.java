@@ -1,6 +1,10 @@
 package com.chem2cs.controller;
 
 
+import com.chem2cs.async.EventModel;
+import com.chem2cs.async.EventProducer;
+import com.chem2cs.async.EventType;
+import com.chem2cs.model.HostHolder;
 import com.chem2cs.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -22,6 +26,10 @@ public class LoginController {
     private static  final Logger LOGGER=  LoggerFactory.getLogger(LoginController.class);
     @Autowired
     UserService userService;
+    @Autowired
+    EventProducer eventProducer;
+    @Autowired
+    HostHolder hostHolder;
     @RequestMapping(path={"/login/"},method = {RequestMethod.POST})
     public String login(Model model,
                         @RequestParam("username")String username,
@@ -30,12 +38,23 @@ public class LoginController {
                         @RequestParam(value = "rememberme",defaultValue ="false")
                                     boolean rememberme,
                         HttpServletResponse response){
-        Map<String,String> map=userService.login(username,password);
+        Map<String,Object> map=userService.login(username,password);
+       // System.out.println(">>>>>>user:"+hostHolder.getUser());
+       // model.addAttribute("user",hostHolder.getUser());
         try {
             if(map.containsKey("ticket")){
-                Cookie cookie =new Cookie("ticket",map.get("ticket"));
+                Cookie cookie =new Cookie("ticket",map.get("ticket").toString());
                 cookie.setPath("/");
+                if (rememberme) {
+                    cookie.setMaxAge(3600*24*5);
+                }
                 response.addCookie(cookie);
+
+                eventProducer.fireEvent(new EventModel(EventType.LOGIN)
+                        .setExt("username", username).setExt("email", "zjuyxy@qq.com")
+                        .setActorId((int)map.get("userId")).setEntityOwnerId((int)map.get("userId")));
+
+
                 if(StringUtils.isNotBlank(next)){
                     System.out.println("我是next:----------"+next);
                     return "redirect:"+next;
@@ -70,6 +89,8 @@ public class LoginController {
                 Cookie cookie =new Cookie("ticket",map.get("ticket"));
                 cookie.setPath("/");
                 response.addCookie(cookie);
+
+
                 if(StringUtils.isNotBlank(next)){
                     System.out.println("我是next:----------"+next);
                     return "redirect:"+next;

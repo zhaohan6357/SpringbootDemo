@@ -34,4 +34,8 @@ public class CommentService {
         return commentDao.updateStatus(id,0);
     }
 
+    public Comment getCommentById(int id){
+        return commentDao.getCommentById(id);
+    }
+
 }
