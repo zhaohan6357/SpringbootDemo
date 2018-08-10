@@ -48,7 +48,7 @@
                     <div class="list zu-small-avatar-list zg-clear js-user-list">
 
                         <#list followUsers as vo>
-                        <a class="zm-item-link-avatar js-user-${vo.id}" href="/user/${vo.id}"
+                        <a title="${vo.name}" class="zm-item-link-avatar js-user-${vo.id}" href="/user/${vo.id}"
                            data-original_title="${vo.name}">
                             <img src="${vo.headUrl}"
                                  class="zm-item-img-avatar"></a>

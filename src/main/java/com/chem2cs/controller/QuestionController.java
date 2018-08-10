@@ -1,10 +1,7 @@
 package com.chem2cs.controller;
 
 import com.chem2cs.model.*;
-import com.chem2cs.service.CommentService;
-import com.chem2cs.service.LikeService;
-import com.chem2cs.service.QuestionService;
-import com.chem2cs.service.UserService;
+import com.chem2cs.service.*;
 import com.chem2cs.util.WendaUtil;
 import org.apache.ibatis.annotations.Mapper;
 import org.slf4j.Logger;
@@ -32,6 +29,8 @@ public class QuestionController {
     CommentService commentService;
     @Autowired
     UserService userService;
+    @Autowired
+    FollowService followService;
     @RequestMapping(value="/question/add",method = {RequestMethod.POST})
     @ResponseBody
     public String addQuestion(@RequestParam(value = "title")String title,
@@ -90,6 +89,28 @@ public class QuestionController {
             user=hostHolder.getUser();
         }
         model.addAttribute("user",user);*/
+        List<ViewObject> followUsers=new ArrayList<>();
+        List<Integer> users= followService.getFollowers(EntityType.ENTITY_QUESTION,qid,0,10);
+        for(Integer uid:users){
+            ViewObject vo=new ViewObject();
+            User user=userService.getUser(uid);
+            if(user==null){
+                continue;
+            }
+            vo.set("name",user.getName());
+            vo.set("headUrl",user.getHeadUrl());
+            vo.set("id",uid);
+            followUsers.add(vo);
+        }
+
+        model.addAttribute("followUsers", followUsers);
+        if (hostHolder.getUser() != null) {
+            model.addAttribute("followed", followService.isFollower(hostHolder.getUser().getId(), EntityType.ENTITY_QUESTION, qid));
+        } else {
+            model.addAttribute("followed", false);
+        }
+
+
         List<Comment> commentList=commentService.getCommentByEntity(qid, EntityType.ENTITY_QUESTION);
         List<ViewObject> comments=new ArrayList<>();
         for(Comment comment:commentList){

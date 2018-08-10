@@ -30,8 +30,7 @@ public class LikeHandler implements EventHandler{
         message.setCreatedDate(new Date());
         User user=userService.getUser(model.getActorId());
         if(model.getType().equals(EventType.LOGIN)) {
-            message.setContent("user " + user.getName() + " login sucess give a like for your comment, http:" +
-                    "//127.0.0.1:8080/question/" + model.getExt("questionId"));
+            message.setContent("user " + user.getName() + " login sucess" );
         }else{
             message.setContent("user " + user.getName() + " give a like for your comment, http:" +
                     "//127.0.0.1:8080/question/" + model.getExt("questionId"));

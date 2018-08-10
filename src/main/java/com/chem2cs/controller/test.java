@@ -1,19 +1,17 @@
 package com.chem2cs.controller;
 
 public class test {
-    int a;
-    int b;
+  int type;
 
-    public test(int a,int b) {
-        this.a = a;
-        this.b=b;
+    public test(int type) {
+        this.type = type;
     }
 
-    public int getA() {
-        return a;
+    public int getType() {
+        return type;
     }
 
-    public int t(){
-        return 333;
+    public void setType(int type) {
+        this.type = type;
     }
 }

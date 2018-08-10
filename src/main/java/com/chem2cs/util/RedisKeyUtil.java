@@ -14,16 +14,16 @@ public class RedisKeyUtil {
     private static String BIZ_TIMELINE="TIMELINE";
 
     public static  String getFollowerKey(int entityType,int entityId){
-        return BIZ_FOLLOWER+SPLIT+String.valueOf(entityType)+String.valueOf(entityId);
+        return BIZ_FOLLOWER+SPLIT+String.valueOf(entityType)+SPLIT+String.valueOf(entityId);
     }//the key of set of users that followed the entity
 
 
     public static  String getFolloweeKey(int entityType,int userId){
-        return BIZ_FOLLOWEE+SPLIT+String.valueOf(userId)+String.valueOf(entityType);
+        return BIZ_FOLLOWEE+SPLIT+String.valueOf(userId)+SPLIT+String.valueOf(entityType);
     } //the key of set of entities that user with userId followed
 
-    public static String getTimeLineKey(){
-        return BIZ_TIMELINE;
+    public static String getTimeLineKey(int userId){
+        return BIZ_TIMELINE+SPLIT+String.valueOf(userId);
     }
 
     public static String getLikeKey(int entityType,int entityId){

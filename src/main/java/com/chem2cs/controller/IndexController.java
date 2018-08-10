@@ -51,13 +51,13 @@ public class IndexController {
             map.put(String.valueOf(i),String.valueOf(i*i));
         }
         model.addAttribute("map",map);
-        test t=new test(1,2);
-        model.addAttribute("test",t);
+
+
         Map<String,Object> maptest=new HashMap<>();
-        maptest.put("t",t);
+
         model.addAttribute("maptest",maptest);
 
-        model.addAttribute("direct",t);
+
 
         model.addAttribute("user",new User("zhao"));
         return "home";

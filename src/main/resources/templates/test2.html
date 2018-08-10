@@ -1,1 +1,15 @@
-${next!}
+<#macro m1 vo>
+this is vo1 vo.type<br>
+</#macro>
+
+<#macro m2 vo>
+this is vo2 vo.type<br>
+</#macro>
+
+<#list feeds as vo>
+<#if (vo.type)==1>
+<@m1 vo=vo/>
+<#elseif (vo.type)==4>
+<@m2 vo=vo/>
+</#if>
+</#list>

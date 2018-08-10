@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.swing.text.View;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +62,7 @@ public class HomeController {
         for(Question question:questionList){
             ViewObject viewObject=new ViewObject();
             viewObject.set("question",question);
+            viewObject.set("followerCount",followService.getFollowerCount(EntityType.ENTITY_QUESTION,question.getId()));
             viewObject.set("user",userService.getUser(question.getUserId()));
             vos.add(viewObject);
         }

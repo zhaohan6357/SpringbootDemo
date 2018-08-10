@@ -1,13 +1,12 @@
 package com.chem2cs.util;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.chem2cs.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.*;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.Transaction;
 
 import java.io.IOException;
 import java.util.List;
@@ -315,6 +314,21 @@ public class JedisAdapter implements InitializingBean {
         try {
             jedis = pool.getResource();
             return jedis.zscore(key,member);
+        } catch (Exception e) {
+            logger.error("发生异常" + e.getMessage());
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return null;
+    }
+
+    public List<String> lrange(String key,long start,long end){
+        Jedis jedis = null;
+        try {
+            jedis = pool.getResource();
+            return jedis.lrange(key,start,end);
         } catch (Exception e) {
             logger.error("发生异常" + e.getMessage());
         } finally {

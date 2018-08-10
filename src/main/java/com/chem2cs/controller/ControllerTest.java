@@ -21,17 +21,15 @@ import java.util.Map;
 
 //@Controller
 public class ControllerTest {
-    @Autowired
-    MailSender mailSender;
 
-    @RequestMapping(path={"/mail"})
-    @ResponseBody
-    public String index(Model model){
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("username", "sasasa");
-        for(int i=0;i<20;i++){
-            mailSender.sendWithHTMLTemplate("sasa", "登陆IP异常", "mails/login_exception.html", map);
+    @RequestMapping(path={"/test"})
+    public String test(Model model){
+        List<test> feeds=new ArrayList<>();
+        for(int i=0;i<10;i++){
+            feeds.add(new test(i%2==0?1:4));
         }
-        return "send mail";
+        model.addAttribute("feeds",feeds);
+        return "test2";
+
     }
 }

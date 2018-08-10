@@ -1,5 +1,8 @@
 package com.chem2cs.controller;
 
+import com.chem2cs.async.EventModel;
+import com.chem2cs.async.EventProducer;
+import com.chem2cs.async.EventType;
 import com.chem2cs.model.Comment;
 import com.chem2cs.model.EntityType;
 import com.chem2cs.model.HostHolder;
@@ -25,6 +28,8 @@ public class CommentController {
     CommentService commentService;
     @Autowired
     HostHolder hostHolder;
+    @Autowired
+    EventProducer eventProducer;
     @RequestMapping(value = "/addComment",method = {RequestMethod.POST})
     public String addComment(@RequestParam("questionId") int questionId,
                              @RequestParam("content") String content){
@@ -45,6 +50,8 @@ public class CommentController {
 
             questionService.updateCommentCount(count,comment.getEntityId());
 
+            eventProducer.fireEvent(new EventModel(EventType.COMMENT).setActorId(comment.getUserId())
+                    .setEntityId(questionId).setEntityType(EntityType.ENTITY_QUESTION));
         } catch (Exception e) {
             LOGGER.error("添加评论失败"+e.getMessage());
         }

@@ -29,6 +29,8 @@ public class FollowController {
     EventProducer eventProducer;
     @Autowired
     QuestionService questionService;
+    @Autowired
+    CommentService commentService;
     @RequestMapping(value="/followUser",method = {RequestMethod.POST})
     @ResponseBody
     public String followUser(@RequestParam(value = "userId")int userId){
@@ -73,7 +75,7 @@ public class FollowController {
 
         boolean ret=followService.follow(hostHolder.getUser().getId(),EntityType.ENTITY_QUESTION,questionId);
         eventProducer.fireEvent(new EventModel(EventType.FOLLOW).setEntityId(questionId)
-                .setEntityType(EntityType.ENTITY_QUESTION).setEntityOwnerId(questionId).setActorId(hostHolder.getUser().getId()));
+                .setEntityType(EntityType.ENTITY_QUESTION).setEntityOwnerId(q.getUserId()).setActorId(hostHolder.getUser().getId()));
 
         Map<String,Object> info=new HashMap<>();
         info.put("headUrl",hostHolder.getUser().getHeadUrl());
@@ -94,13 +96,11 @@ public class FollowController {
         if(q==null){
             return WendaUtil.getJSONString(1,"the question is not existed!");
         }
-        boolean ret=followService.unfollow(hostHolder.getUser().getId(),EntityType.ENTITY_USER,questionId);
+        boolean ret=followService.unfollow(hostHolder.getUser().getId(),EntityType.ENTITY_QUESTION,questionId);
         eventProducer.fireEvent(new EventModel(EventType.UNFOLLOW).setEntityId(questionId)
-                .setEntityType(EntityType.ENTITY_QUESTION).setEntityOwnerId(questionId).setActorId(hostHolder.getUser().getId()));
+                .setEntityType(EntityType.ENTITY_QUESTION).setEntityOwnerId(q.getUserId()).setActorId(hostHolder.getUser().getId()));
 
         Map<String,Object> info=new HashMap<>();
-        info.put("headUrl",hostHolder.getUser().getHeadUrl());
-        info.put("name",hostHolder.getUser().getName());
         info.put("id",hostHolder.getUser().getId());
         info.put("count",followService.getFollowerCount(EntityType.ENTITY_QUESTION,questionId));
         return WendaUtil.getJSONString(ret? 0:1,info);
@@ -108,12 +108,15 @@ public class FollowController {
 
     @RequestMapping(value="/user/{uid}/followees",method = {RequestMethod.GET})
     public String followees(Model model,@PathVariable(value = "uid")int userId){
+        User user=userService.getUser(userId);
+        model.addAttribute("curUser",user);
         List<Integer> followeeIds=followService.getFollowees(EntityType.ENTITY_USER,userId,0,10);
         if(hostHolder.getUser()!=null){
             model.addAttribute("followees",getUsersInfo(hostHolder.getUser().getId(),followeeIds));
         }else{
             model.addAttribute("followees",getUsersInfo(0,followeeIds));
         }
+
         return "followees";
 
     }
@@ -125,9 +128,10 @@ public class FollowController {
                 continue;
             }
             ViewObject vo=new ViewObject();
-            vo.set("usre",user);
+            vo.set("user",user);
             vo.set("followerCount",followService.getFollowerCount(EntityType.ENTITY_USER,uid));
             vo.set("followeeCount",followService.getFolloweeCount(EntityType.ENTITY_USER,uid));
+            vo.set("commentCount",commentService.getUserCommentCount(uid,EntityType.ENTITY_QUESTION));
            if(localUserId!=0){
                vo.set("followed",followService.isFollower(localUserId,EntityType.ENTITY_USER,uid));
            }else{
@@ -140,6 +144,8 @@ public class FollowController {
 
     @RequestMapping(value="/user/{uid}/followers",method = {RequestMethod.GET})
     public String followers (Model model,@PathVariable(value = "uid")int userId){
+        User user=userService.getUser(userId);
+        model.addAttribute("curUser",user);
         List<Integer> followerIds=followService.getFollowers(EntityType.ENTITY_USER,userId,0,10);
         if(hostHolder.getUser()!=null){
             model.addAttribute("followers",getUsersInfo(hostHolder.getUser().getId(),followerIds));
